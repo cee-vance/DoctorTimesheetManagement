@@ -1,0 +1,10 @@
+AWS services:
+
+1) Scalling
+2) Auto-balancer
+3) S3 for static files
+4) EC2 server Ubuntu for app
+5) RDS for database 
+6) Route53 for dns 
+7) SES / SNS for emails 
+8) Cogniti for security 
