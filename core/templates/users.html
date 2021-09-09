@@ -1,0 +1,19 @@
+{% extends 'home.html'%}
+
+{% block content %}  
+
+
+    <h4>this is Users page</h4>
+
+    <div id="sidebar">
+            <h3>Doctors</h3>
+            <ul>
+                {% for u in users %}
+                    <li >
+                        {{ u.firstName}}  {{u.lastName}}
+                    </li>
+                {% endfor %}
+            </ul>
+    </div>
+
+{% endblock content %}

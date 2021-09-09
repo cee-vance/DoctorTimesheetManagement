@@ -9,13 +9,10 @@ from .models import User
 class admin_home(ListView):
     model = User
     template_name = 'home.html'
+    
+
+class users_page(ListView):
+    model = User
+    template_name = 'users.html'
     context_object_name = 'users'
 
-
-"""
-class CategoryDetail(generic.DetailView):
-    model = Category
-    template_name = 'store/category_detail.html'
-    
-    
-"""
