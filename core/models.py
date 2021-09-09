@@ -22,7 +22,7 @@ class HoursCode(models.Model):
     choices are AMCO or FPB
     """
     CHOICES = (('A','AMCO'), ('F','FPB'))
-    code = models.CharField(choices = CHOICES, max_length=4)
+    code = models.CharField(choices = CHOICES, max_length=4, default = 'A')
 
 
 class Sector(models.Model):
@@ -50,7 +50,7 @@ class WorkEntry( models.Model):
     date = models.DateTimeField(auto_now_add=True)
     start_time = models.IntegerField(null= True, default=0)
     end_time = models.IntegerField(null = True, default = 0)
-    hourscode_id = models.ForeignKey(HoursCode, on_delete=CASCADE)
+    hourscode_id = models.ForeignKey(HoursCode, on_delete=CASCADE, default=0)
 
     # To Do:
 
