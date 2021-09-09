@@ -1,1 +1,14 @@
-<a1>Hello</a1>
+    <div>
+        <h4>Home Page</h4>
+    </div>
+     <div id="sidebar">
+        <h3>Doctors</h3>
+        <ul>
+
+        {% for u in users %}
+            <li >
+                {{ u.firstName}}  {{u.lastName}}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
