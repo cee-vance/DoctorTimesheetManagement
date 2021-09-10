@@ -23,3 +23,7 @@ class reports_page(ListView):
     model = Location
     template_name = 'reports.html'
 
+class stamps_page(ListView):
+    model = Location
+    template_name = 'stamps.html'
+

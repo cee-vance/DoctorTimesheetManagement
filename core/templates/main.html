@@ -26,7 +26,7 @@
 <body>
 
 
-
+{% if user.is_authenticated %}
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -46,6 +46,7 @@
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'core:users'%}">Users</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'core:locations'%}">Locations</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'core:stamps'%}">Time Stamps</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'core:reports'%}">Reports</a>
                 </div>
             </div>
@@ -62,6 +63,10 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+
+{% else %}
+<h4>Please login to use this app. </h4>  
+{% endif %}
 </body>
 </html>
 
