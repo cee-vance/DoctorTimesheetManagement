@@ -22,4 +22,4 @@ class StempForm(forms.ModelForm):
 class DoctorCreateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = [ 'firstName', 'lastName', 'description', 'email']
+        fields = '__all__'
