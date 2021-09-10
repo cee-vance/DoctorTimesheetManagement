@@ -16,7 +16,7 @@ class User(models.Model):
 
 
 
-class HoursCode(models.Model):
+class HoursCode(models.Model): # no DB
     """
     Defines the type of hours worked
     choices are AMCO or FPB
@@ -31,7 +31,7 @@ class Sector(models.Model):
     choices are east and west
     """
     SectorChoices =  (('E','East'), ('W','West'))
-
+    
     name = models.CharField(choices = SectorChoices, max_length=4 )
 
 
