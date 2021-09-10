@@ -20,7 +20,23 @@ class User(models.Model):
 
 
 
+class HoursCode(models.Model): # no DB
+    """
+    Defines the type of hours worked
+    choices are AMCO or FPB
+    """
+    CHOICES = (('A','AMCO'), ('F','FPB'))
+    code = models.CharField(choices = CHOICES, max_length=4, default = 'A')
 
+
+class Sector(models.Model):
+    """
+    Divides all the locations into sectors
+    choices are east and west
+    """
+    SectorChoices =  (('E','East'), ('W','West'))
+    
+    name = models.CharField(choices = SectorChoices, max_length=4 )
 
 
 
