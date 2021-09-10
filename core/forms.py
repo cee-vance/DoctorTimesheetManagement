@@ -17,3 +17,9 @@ class StempForm(forms.ModelForm):
     class Meta:
         model = WorkEntry
         fields = '__all__'
+
+
+class DoctorCreateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [ 'firstName', 'lastName', 'description', 'email']
