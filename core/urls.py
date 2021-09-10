@@ -1,6 +1,6 @@
 from . import views
 from django.urls import path
-from core.views import admin_main, users_page, locations_page, reports_page, stamps_page
+from core.views import admin_main, users_page, locations_page, reports_page, stamps_page , DoctorCreateView
 
 app_name ='core'
 
@@ -9,5 +9,6 @@ urlpatterns = [
     path('users/', users_page.as_view() , name='users'),
     path('locations/', locations_page.as_view() , name='locations'),
     path('stamps/', stamps_page.as_view() , name='stamps'),
-    path('reports/', reports_page.as_view() , name='reports')
+    path('reports/', reports_page.as_view() , name='reports'),
+    path('create_user/', DoctorCreateView.as_view(), name='create_user')
 ]

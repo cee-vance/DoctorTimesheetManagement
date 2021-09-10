@@ -45,3 +45,10 @@ class stamps_page(CreateView): # CreateView, Model.FormSetFactory 10-15 instance
         context.update({'workentries': WorkEntry.objects.all})
         return context
 
+
+class DoctorCreateView(CreateView):
+    model = User
+    template_name = 'create_user.html'
+    fields = ['firstName', 'lastName', 'description','email', 'user']
+    success_url = reverse_lazy('core:users')
+
