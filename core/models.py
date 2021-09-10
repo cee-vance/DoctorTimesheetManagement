@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class User(models.Model):
     """"
     The user of the Doctor Management System
@@ -18,25 +19,8 @@ class User(models.Model):
     user = models.ForeignKey(User, on_delete = CASCADE, default = 1 )
     email_conf = models.BooleanField(default = False)
 
-
-
-class HoursCode(models.Model): # no DB
-    """
-    Defines the type of hours worked
-    choices are AMCO or FPB
-    """
-    CHOICES = (('A','AMCO'), ('F','FPB'))
-    code = models.CharField(choices = CHOICES, max_length=4, default = 'A')
-
-
-class Sector(models.Model):
-    """
-    Divides all the locations into sectors
-    choices are east and west
-    """
-    SectorChoices =  (('E','East'), ('W','West'))
-    
-    name = models.CharField(choices = SectorChoices, max_length=4 )
+    def __str__(self):
+        return self.firstName
 
 
 
@@ -50,7 +34,11 @@ class Location(models.Model):
     sector = models.CharField(choices = SECTOR_CHOICES, max_length = 4,default = 'East')
     address = models.CharField(max_length=150, null=True)
 
-class WorkEntry( models.Model):
+    def __str__(self):
+        return self.name    
+
+
+class WorkEntry(models.Model):
     """
     Represents a doctors work entry
     including date , start, end time,
@@ -64,5 +52,6 @@ class WorkEntry( models.Model):
     end_time = models.IntegerField(null = True, default = 0)
     hourscode = models.CharField(choices = HC_CHOICES, max_length = 4, default = 'AMCO')
 
-
+    def __str__(self):
+        return str(self.doctor_id)
 

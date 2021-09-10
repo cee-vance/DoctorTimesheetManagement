@@ -3,6 +3,11 @@
 {% block content %}  
 
 
-    <h4>this is Reports page</h4>
+    <br>{% if workentries %}
+        {% for entry in workentries %}
+            <br>Name: {{ entry.doctor_id }} | Date: {{ entry.date }} | Start time: {{ entry.start_time }} | End Time:{{ entry.end_time }}</br>          
+        {% endfor %}
+    {% endif %}</br>
+
 
 {% endblock content %}
