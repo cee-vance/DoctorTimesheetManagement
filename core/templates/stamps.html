@@ -3,10 +3,13 @@
 {% block content %}  
 
 
-    <br>{% if workentries %}
-        {% for entry in workentries %}
-            <br>Name: {{ entry.doctor_id }} | Date: {{ entry.date }} | Start time: {{ entry.start_time }} | End Time:{{ entry.end_time }}</br>          
-        {% endfor %}
-    {% endif %}</br>
+<body>
+    <form method="post" action="{% url 'core:stamps' %}">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Save</button>
+    </form>
+</body>
+
 
 {% endblock content %}
