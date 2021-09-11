@@ -26,6 +26,7 @@ class users_page(ListView):
 class locations_page(ListView):
     model = Location
     template_name = 'locations.html'
+    context_object_name='locations'
 
 
 class reports_page(ListView):
@@ -55,12 +56,22 @@ class DoctorCreateView(CreateView):
     success_url = reverse_lazy('core:users')
 
 
-def user_details(request, id):
-    user = get_object_or_404(User, pk = int(id))
-    return render(request , 'user_details.html', {'user':user})
+
 
 
 class DoctorDetailsView(DetailView):
     model = User
     template_name = 'user_details.html'
     context_object_name = 'user'
+
+
+class CreateLocation(CreateView):
+    """
+    Create a location to be used
+    by a workentry item
+    """
+    model = Location
+    template_name = 'create_location.html'
+    fields = '__all__'
+    success_url = reverse_lazy('core:locations')
+

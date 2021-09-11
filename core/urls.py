@@ -1,6 +1,6 @@
 from . import views
 from django.urls import path, re_path
-from core.views import admin_main, users_page, locations_page, reports_page, stamps_page , DoctorCreateView, DoctorDetailsView
+from core.views import admin_main, users_page, locations_page, reports_page, stamps_page , DoctorCreateView, DoctorDetailsView, CreateLocation
 
 app_name ='core'
 
@@ -13,5 +13,7 @@ urlpatterns = [
     # create a doctor / user
     path('create_user/', DoctorCreateView.as_view(), name='create_user'),
     # doctor / user details ... link from users.html
-    path('<int:pk>/',DoctorDetailsView.as_view() , name='user_details')
+    path('<int:pk>/',DoctorDetailsView.as_view() , name='user_details'),
+
+    path('create_location/', CreateLocation.as_view(), name='create_location'),
 ]
