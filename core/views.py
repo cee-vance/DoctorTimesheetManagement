@@ -2,6 +2,9 @@ from django.forms.models import modelformset_factory
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.shortcuts import get_object_or_404, render
+
+import core.models
 from .models import User, Location, WorkEntry
 from .forms import ReportForm, StempForm
 # Create your views here.
@@ -13,7 +16,7 @@ class admin_main(ListView):
     template_name = 'main.html'   
 
 class users_page(ListView):
-    model = User
+    model = core.models.User
     template_name = 'users.html'
     context_object_name = 'users'
 
@@ -52,3 +55,12 @@ class DoctorCreateView(CreateView):
     fields = ['firstName', 'lastName', 'description','email', 'user']
     success_url = reverse_lazy('core:users')
 
+def user_details(request, id):
+    user = get_object_or_404(User, pk = int(id))
+    return render(request , 'user_details.html', {'user':user})
+
+
+class DoctorDetailsView(DetailView):
+    model = User
+    template_name = 'user_details.html'
+    context_object_name = 'user'

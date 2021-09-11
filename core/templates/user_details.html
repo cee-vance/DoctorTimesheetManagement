@@ -1,0 +1,7 @@
+{% extends 'main.html'%}
+
+{% block content %}
+<h4>Details Page</h4>
+<div>{{user.firstName}} {{user.lastName}} {{user.description}}    </div>
+<!--<a href="{% url 'productapp:product_update' product.id %}" > Edit </a>  -->
+{% endblock content %}
