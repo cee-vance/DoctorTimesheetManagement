@@ -15,7 +15,6 @@ class ReportForm(forms.ModelForm):
 
 
 
-
 class StempForm(forms.ModelForm):
     class Meta:
         model = WorkEntry

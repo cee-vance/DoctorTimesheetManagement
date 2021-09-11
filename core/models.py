@@ -13,9 +13,7 @@ class User(models.Model):
     firstName = models.CharField( max_length=50, null= False)
     lastName = models.CharField( max_length=100, null= False)
     description = models.CharField(max_length=500 , null = True)
-    # TO DO: change email field
     email = models.EmailField( max_length = 254, null=True)
-
     user = models.ForeignKey(User, on_delete = CASCADE, default = 1 )
     email_conf = models.BooleanField(default = False)
 

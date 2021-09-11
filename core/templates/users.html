@@ -1,18 +1,20 @@
 {% extends 'main.html'%}
 
-{% block content %}  
-
-
-    <h4>this is Users page</h4>
+{% block content %} 
+<form>
 
     <div id="sidebar">
             <ul>
                 {% for u in users %}
-
-            <li><a href="{% url 'core:user_details' u.id %}">{{ u.user.username }}</a></li>
+                    <br>{{ u.firstName }} {{ u.lastName }} | Description: {{ u.description }} | Email:  {{ u.email }}</br>
+                    <!--<li><a href="{% url 'core:user_details' u.id %}">{{ u.user.username }}</a></li>-->
 
                 {% endfor %}
             </ul>
     </div>
+    <a class="btn btn-outline-secondary" href="{% url 'core:create_user'%}">Create new user</a>  
+    
+</form>
+
 
 {% endblock content %}
