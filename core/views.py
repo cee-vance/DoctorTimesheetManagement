@@ -1,12 +1,12 @@
 from django.forms.models import modelformset_factory
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404, render
 
 import core.models
 from .models import User, Location, WorkEntry
-from .forms import ReportForm, StempForm, StempFormSet, LocationForm
+from .forms import ReportForm, StempForm, StempFormSet, LocationForm , DoctorCreateForm
 # Create your views here.
 from django.forms import formset_factory
 
@@ -84,3 +84,19 @@ class LocationUpdate(UpdateView):
     template_name = 'update_location.html'
     success_url = reverse_lazy('core:locations')
 
+class UserUpdate(UpdateView):
+    """
+    Update a User
+    """
+    model = User
+    form_class = DoctorCreateForm
+    template_name = 'update_user.html'
+    success_url = reverse_lazy('core:users')
+
+class LocationDelete(DeleteView):
+    """
+    Delete a location
+    """
+    model = Location
+
+    success_url = reverse_lazy('core:locations')
