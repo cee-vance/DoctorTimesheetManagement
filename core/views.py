@@ -49,21 +49,45 @@ class stamps_page(CreateView): # CreateView, Model.FormSetFactory 10-15 instance
     ArticleFormSet = formset_factory(StempForm)
 
 
+
+# USER / DOCTOR CRUD OPERATIONS
+
 class DoctorCreateView(CreateView):
+    """
+    User / Doctor Create
+    """
     model = User
     template_name = 'create_user.html'
     fields = ['firstName', 'lastName', 'description','email', 'user']
     success_url = reverse_lazy('core:users')
 
-
-
-
+class UserDelete(DeleteView):
+    """
+    User/ Doctor Delete
+    """
+    model = User
+    success_url = reverse_lazy('core:users')
 
 class DoctorDetailsView(DetailView):
+    """
+    User/ Doctor details
+    """
     model = User
     template_name = 'user_details.html'
     context_object_name = 'user'
 
+class UserUpdate(UpdateView):
+    """
+    Update a User
+    """
+    model = User
+    form_class = DoctorCreateForm
+    template_name = 'update_user.html'
+    success_url = reverse_lazy('core:users')
+
+
+
+# LOCATION CRUD OPERATIONS
 
 class CreateLocation(CreateView):
     """
@@ -84,14 +108,7 @@ class LocationUpdate(UpdateView):
     template_name = 'update_location.html'
     success_url = reverse_lazy('core:locations')
 
-class UserUpdate(UpdateView):
-    """
-    Update a User
-    """
-    model = User
-    form_class = DoctorCreateForm
-    template_name = 'update_user.html'
-    success_url = reverse_lazy('core:users')
+
 
 class LocationDelete(DeleteView):
     """
