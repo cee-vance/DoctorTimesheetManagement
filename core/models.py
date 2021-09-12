@@ -49,7 +49,7 @@ class WorkEntry(models.Model):
     start_time = models.IntegerField(null= True, default=0)
     end_time = models.IntegerField(null = True, default = 0)
     hourscode = models.CharField(choices = HC_CHOICES, max_length = 4, default = 'AMCO')
-
+    location = models.ForeignKey(Location, on_delete=CASCADE, default=2)
     def __str__(self):
         return str(self.doctor_id)
 
