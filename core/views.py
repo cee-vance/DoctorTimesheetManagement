@@ -100,3 +100,11 @@ class LocationDelete(DeleteView):
     model = Location
 
     success_url = reverse_lazy('core:locations')
+
+class LocationDetail(DetailView):
+    """
+    Shows details of location
+    """
+    model = Location
+    template_name = 'location_details.html'
+    context_object_name = 'location'

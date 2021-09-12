@@ -8,7 +8,7 @@
     <div id="sidebar">
             <ul>
                 {% for location in locations %}
-                    <br>{{ location.name }} {{ location.sector }} </br>
+                <li><a href="{% url 'core:location_details' location.id %}"> {{ location.name }}</a></li>
 
 
                 {% endfor %}

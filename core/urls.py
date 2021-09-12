@@ -1,7 +1,8 @@
 from . import views
 from django.urls import path, re_path
 from core.views import admin_main, users_page, locations_page, reports_page, stamps_page ,\
-    DoctorCreateView, DoctorDetailsView, CreateLocation,LocationUpdate , UserUpdate , LocationDelete
+    DoctorCreateView, DoctorDetailsView, CreateLocation,LocationUpdate , UserUpdate , LocationDelete,  \
+    LocationDetail
 
 app_name ='core'
 
@@ -24,4 +25,6 @@ urlpatterns = [
 
     #delete location
     path('delete_location/<int:pk>/' , LocationDelete.as_view(), name='delete_location'),
+    #location detail
+    path('<int:pk>/detail_location/', LocationDetail.as_view(), name = 'location_details')
 ]

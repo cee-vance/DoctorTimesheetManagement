@@ -1,0 +1,23 @@
+{% extends 'main.html'%}
+
+{% block content %}
+<h4>Details Page</h4>
+<div>
+    <table>
+<tr>
+<td>Location Name</td>
+<td>Address</td>
+    <td>Sector</td>
+</tr>
+<tr>
+<td>{{location.name}}</td>
+<td>{{location.address}}</td>
+    <td>  {{ location.sector}}  </td>
+    <td><a href = "{% url 'core:update_location' location.id %}" > Update</a></td>
+    <td><a href = "{% url 'core:delete_location' location.id %}" > Delete</a></td>
+</tr>
+</table>  </div>
+
+
+
+{% endblock content %}
