@@ -1,14 +1,14 @@
-from django.forms.models import modelformset_factory
+from django.forms.models import inlineformset_factory, modelformset_factory
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 import core.models
 from .models import User, Location, WorkEntry
-from .forms import ReportForm, StempForm, StempFormSet, LocationForm , DoctorCreateForm
+from .forms import ReportForm, StempForm,  LocationForm , DoctorCreateForm
 # Create your views here.
-from django.forms import formset_factory
+from django.forms import formset_factory, inlineformset_factory
 
 #@login_required
 class admin_main(ListView):
@@ -40,13 +40,18 @@ class reports_page(ListView):
         return context
 
 
-class stamps_page(CreateView): # CreateView, Model.FormSetFactory 10-15 instances (view = Calendar View third party package)
-    model = WorkEntry
-    template_name = 'stamps.html'
-    form_class = StempForm
-    #modelformset_factory = WorkEntry
-    success_url = reverse_lazy('core:stamps')
-    ArticleFormSet = formset_factory(StempForm)
+def stamps_test_function(request):
+    OrderFormSet = inlineformset_factory(User, WorkEntry, fields=('doctor_id', 'start_time', 'end_time', 'hourscode', 'location'))
+    formset = OrderFormSet()
+    #form = StempForm()
+    context = {'formset': formset}
+    if request.method == "POST":
+        formset = OrderFormSet(request.POST)
+        # form = StempForm(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('/')
+    return render(request, 'stamps.html', context)
 
 
 

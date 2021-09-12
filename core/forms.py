@@ -14,13 +14,10 @@ class ReportForm(forms.ModelForm):
         fields = '__all__'
 
 
-
 class StempForm(forms.ModelForm):
     class Meta:
         model = WorkEntry
         fields = '__all__'
-    
-StempFormSet = modelformset_factory(WorkEntry, fields=('start_time', 'end_time'), extra=8,)
 
 
 class DoctorCreateForm(forms.ModelForm):

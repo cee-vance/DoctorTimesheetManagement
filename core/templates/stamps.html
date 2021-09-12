@@ -4,9 +4,16 @@
 
 
 <body>
+    
     <form method="post" action="{% url 'core:stamps' %}">
+    <hr>
         {% csrf_token %}
-        {{ form }}
+        {{ formset.management_form }}
+        {{ formset.doctor_id }}
+        {% for form in formset %}
+            {{ form }}
+            <hr>
+        {% endfor %}
         <button type="submit">Save</button>
     </form>
 </body>
