@@ -27,3 +27,9 @@ class DoctorCreateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = '__all__'
+
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = '__all__'
+

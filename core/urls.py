@@ -1,6 +1,7 @@
 from . import views
 from django.urls import path, re_path
-from core.views import admin_main, users_page, locations_page, reports_page, stamps_page , DoctorCreateView, DoctorDetailsView, CreateLocation
+from core.views import admin_main, users_page, locations_page, reports_page, stamps_page ,\
+    DoctorCreateView, DoctorDetailsView, CreateLocation,LocationUpdate
 
 app_name ='core'
 
@@ -16,4 +17,6 @@ urlpatterns = [
     path('<int:pk>/',DoctorDetailsView.as_view() , name='user_details'),
 
     path('create_location/', CreateLocation.as_view(), name='create_location'),
+    # update a location
+    path('<int:pk>/update_location', LocationUpdate.as_view(), name='update_location' ),
 ]
