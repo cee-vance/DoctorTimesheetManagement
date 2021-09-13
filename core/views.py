@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponseRedirect
 
+
 import core.models
 from .models import User, Location, WorkEntry
 from .forms import ReportForm, StempForm,  LocationForm , DoctorCreateForm, StepFormSet 
@@ -29,15 +30,29 @@ class locations_page(ListView):
     context_object_name='locations'
 
 
-class reports_page(ListView):
-    model = Location
-    template_name = 'reports.html'
-    form_class = ReportForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({'workentries': WorkEntry.objects.all})
-        return context
+
+def workentry_filter(request):
+    qs = WorkEntry.objects.all()
+    user_contains = request.GET.get('doctor_id')
+    srch_date = request.GET.get('date')
+    srch_location = request.GET.get('location')
+
+    if user_contains != '':
+       qs = qs.filter(doctor_id  = user_contains )
+
+    if srch_date != '':
+        qs = qs.filter( date = srch_date)
+
+    if srch_location != '':
+        qs = qs.filter(location = srch_location)
+
+    context = {
+        'entries':qs
+    }
+    return render(request, 'reports.html', context)
+
+
 
 
 class stamps_page(ListView):
