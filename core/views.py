@@ -2,7 +2,7 @@ from django.forms.models import inlineformset_factory, modelformset_factory
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.shortcuts import get_object_or_404, render, redirect, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, redirect, HttpResponseRedirect,HttpResponse
 
 
 import core.models
@@ -10,18 +10,24 @@ from .models import User, Location, WorkEntry
 from .forms import ReportForm, StempForm,  LocationForm , DoctorCreateForm, StepFormSet 
 # Create your views here.
 from django.forms import formset_factory, inlineformset_factory
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import user_passes_test
 
-#@login_required
+
+
 class admin_main(ListView):
     model = User
     template_name = 'main.html'   
 
 
-class users_page(ListView):
+
+class users_page(UserPassesTestMixin, ListView):
     model = User
     #model = core.models.User
     template_name = 'users.html'
     context_object_name = 'users'
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin').exists()
 
 
 class locations_page(ListView):
@@ -31,8 +37,9 @@ class locations_page(ListView):
 
 
 
-
 def workentry_filter(request):
+    if not request.user.groups.filter(name='admin').exists():
+        return HttpResponse('Must be admin to view reports page')
     qs = WorkEntry.objects.all()
     user_contains = request.GET.get('doctor_id')
     srch_date = request.GET.get('date')
@@ -55,12 +62,14 @@ def workentry_filter(request):
 
 
 
-class stamps_page(ListView):
+class stamps_page(UserPassesTestMixin,ListView):
     model = WorkEntry
     template_name = 'stamps.html'
     form_class = StempForm
     context_object_name='stamps'
 
+    def test_func(self):
+        return self.request.user.groups.filter(name='Doctor').exists()
 
 def stamps_second_test_function(request, pk):
     user = User.objects.get(pk=pk)
@@ -81,7 +90,7 @@ def stamps_second_test_function(request, pk):
 
 # USER / DOCTOR CRUD OPERATIONS
 
-class DoctorCreateView(CreateView):
+class DoctorCreateView(UserPassesTestMixin,CreateView):
     """
     User / Doctor Create
     """
@@ -90,14 +99,20 @@ class DoctorCreateView(CreateView):
     fields = ['firstName', 'lastName', 'description','email', 'user']
     success_url = reverse_lazy('core:users')
 
-class UserDelete(DeleteView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin').exists()
+
+class UserDelete(UserPassesTestMixin, DeleteView):
     """
     User/ Doctor Delete
     """
     model = User
     success_url = reverse_lazy('core:users')
 
-class DoctorDetailsView(DetailView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin').exists()
+
+class DoctorDetailsView(UserPassesTestMixin,DetailView):
     """
     User/ Doctor details
     """
@@ -105,7 +120,10 @@ class DoctorDetailsView(DetailView):
     template_name = 'user_details.html'
     context_object_name = 'user'
 
-class UserUpdate(UpdateView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin').exists()
+
+class UserUpdate(UserPassesTestMixin, UpdateView):
     """
     Update a User
     """
@@ -114,11 +132,14 @@ class UserUpdate(UpdateView):
     template_name = 'update_user.html'
     success_url = reverse_lazy('core:users')
 
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin').exists()
+
 
 
 # LOCATION CRUD OPERATIONS
 
-class CreateLocation(CreateView):
+class CreateLocation( UserPassesTestMixin, CreateView):
     """
     Create a location to be used
     by a workentry item
@@ -128,7 +149,10 @@ class CreateLocation(CreateView):
     fields = '__all__'
     success_url = reverse_lazy('core:locations')
 
-class LocationUpdate(UpdateView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin').exists()
+
+class LocationUpdate(UserPassesTestMixin, UpdateView):
     """
     Update a Location
     """
@@ -137,14 +161,20 @@ class LocationUpdate(UpdateView):
     template_name = 'update_location.html'
     success_url = reverse_lazy('core:locations')
 
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin').exists()
 
 
-class LocationDelete(DeleteView):
+
+class LocationDelete(UserPassesTestMixin, DeleteView):
     """
     Delete a location
     """
     model = Location
     success_url = reverse_lazy('core:locations')
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='admin').exists()
 
 class LocationDetail(DetailView):
     """
