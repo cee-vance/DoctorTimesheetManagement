@@ -1,26 +1,26 @@
 {% extends 'main.html'%}
 
-{% block content %}
-<h4>Details Page</h4>
+{% block content %} 
+
 <div>
     <table>
-<tr>
-<td>First Name</td>
-<td>Last Name</td>
-    <td>Email</td>
-    <td>Username</td>
-    <td>Confirmed</td>
+        <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+            <td>Email</td>
+            <td>Username</td>
+            <td>Confirmed</td>
+        </tr>
+        <tr>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+            <td> {{user.email}}  </td>
+            <td>{{user.user}}</td>
+            <td>{{user.email_conf}}</td>
+            <td><a href = "{% url 'core:update_user' user.id %}" > Update</a></td>
+            <td><a href = "{% url 'core:delete_user' user.id %}" > Delete</a></td> 
 </tr>
-<tr>
-<td>{{user.firstName}}</td>
-<td>{{user.lastName}}</td>
-    <td> {{user.email}}  </td>
-    <td>{{user.user}}</td>
-    <td>{{user.email_conf}}</td>
-    <td><a href = "{% url 'core:update_user' location.id %}" > Update</a></td>
-    <td><a href = "{% url 'core:delete_user' location.id %}" > Delete</a></td>
-</tr>
-</table>  </div>
+</table>  </div> 
 
 
 

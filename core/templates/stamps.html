@@ -4,12 +4,12 @@
 
 
 <body>
-    <form method="post" action="{% url 'core:stamps' %}">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Save</button>
-    </form>
+<form>
+    {{ stamps }}
+    <br>
+    <a class="btn btn-outline-secondary" href="../stamps_detail/1/">Details</a>  
+    </br>
+</form>
 </body>
-
 
 {% endblock content %}
