@@ -4,19 +4,12 @@
 
 
 <body>
-    
-    <form method="post" action="{% url 'core:stamps' %}">
-    <hr>
-        {% csrf_token %}
-        {{ formset.management_form }}
-        {{ formset.doctor_id }}
-        {% for form in formset %}
-            {{ form }}
-            <hr>
-        {% endfor %}
-        <button type="submit">Save</button>
-    </form>
+<form>
+    {{ stamps }}
+    <br>
+    <a class="btn btn-outline-secondary" href="../stamps_detail/1/">Details</a>  
+    </br>
+</form>
 </body>
-
 
 {% endblock content %}

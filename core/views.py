@@ -2,11 +2,11 @@ from django.forms.models import inlineformset_factory, modelformset_factory
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, HttpResponseRedirect
 
 import core.models
 from .models import User, Location, WorkEntry
-from .forms import ReportForm, StempForm,  LocationForm , DoctorCreateForm
+from .forms import ReportForm, StempForm,  LocationForm , DoctorCreateForm, StepFormSet 
 # Create your views here.
 from django.forms import formset_factory, inlineformset_factory
 
@@ -40,18 +40,27 @@ class reports_page(ListView):
         return context
 
 
-def stamps_test_function(request):
-    OrderFormSet = inlineformset_factory(User, WorkEntry, fields=('doctor_id', 'start_time', 'end_time', 'hourscode', 'location'))
-    formset = OrderFormSet()
-    #form = StempForm()
-    context = {'formset': formset}
+class stamps_page(ListView):
+    model = WorkEntry
+    template_name = 'stamps.html'
+    form_class = StempForm
+    context_object_name='stamps'
+
+
+def stamps_second_test_function(request, pk):
+    user = User.objects.get(pk=pk)
+    formset = StepFormSet(request.POST or None)
+
     if request.method == "POST":
-        formset = OrderFormSet(request.POST)
-        # form = StempForm(request.POST)
         if formset.is_valid():
+            formset.instance = user
             formset.save()
-            return redirect('/')
-    return render(request, 'stamps.html', context)
+            return HttpResponseRedirect('/core/')
+    context = {
+        "formset": formset,
+        "user": user
+    }
+    return render(request, 'stamps_detail.html', context)
 
 
 
@@ -120,7 +129,6 @@ class LocationDelete(DeleteView):
     Delete a location
     """
     model = Location
-
     success_url = reverse_lazy('core:locations')
 
 class LocationDetail(DetailView):
