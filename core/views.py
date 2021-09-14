@@ -73,7 +73,7 @@ class DoctorCreateView(CreateView):
     model = User
     template_name = 'create_user.html'
     fields = ['firstName', 'lastName', 'description','email', 'user']
-    success_url = reverse_lazy('core:users')
+    success_url = reverse_lazy('core:users') # 2 forms / new fiels is admin 
 
 class UserDelete(DeleteView):
     """

@@ -15,7 +15,7 @@ class User(models.Model):
     description = models.CharField(max_length=500 , null = True)
     email = models.EmailField( max_length = 254, null=True)
     user = models.ForeignKey(User, on_delete = CASCADE, default = 1 )
-    email_conf = models.BooleanField(default = False)
+    email_conf = models.BooleanField(default = False) # if its admin a
 
     def __str__(self):
         return self.firstName
