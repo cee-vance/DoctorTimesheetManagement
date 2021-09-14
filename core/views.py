@@ -38,10 +38,6 @@ class locations_page(ListView):
 
 
 
-
-
-
-
 class stamps_page(UserPassesTestMixin,ListView):
     model = WorkEntry
     template_name = 'stamps.html'
@@ -50,6 +46,11 @@ class stamps_page(UserPassesTestMixin,ListView):
 
     def test_func(self):
         return self.request.user.groups.filter(name='Doctor').exists()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'user_key': User.objects.all})
+        return context
 
 def stamps_second_test_function(request, pk):
     user = User.objects.get(pk=pk)
@@ -169,8 +170,8 @@ def reports_page(request):
     """"
     Filters WorkEntry items by user, date , location, and hourscode
     """
-    if not request.user.groups.filter(name='admin').exists():
-        return HttpResponse('Must be admin to view reports page')
+    # if not request.user.groups.filter(name='admin').exists():
+    #     return HttpResponse('Must be admin to view reports page')
     entries = WorkEntry.objects.all()
 
     filter = WorkEntryFilter(request.GET, queryset=entries)

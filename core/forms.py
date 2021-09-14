@@ -24,7 +24,7 @@ StepFormSet = inlineformset_factory(
      WorkEntry,
      StempForm,
      can_delete=True,   
-     min_num=10,
+     min_num=4,
      extra=0
 )
 

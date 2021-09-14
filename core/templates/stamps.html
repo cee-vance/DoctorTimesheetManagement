@@ -4,12 +4,18 @@
 
 
 <body>
-<form>
-    {{ stamps }}
+    <form>
+    {% for user in user_key %}
+        <td><a href = "{% url 'core:stamps_detail' user.id %}" >{{ user.firstName }}</a></td>
+        <hr>
+    {% endfor %}
+
     <br>
     <a class="btn btn-outline-secondary" href="../stamps_detail/1/">Details</a>  
     </br>
-</form>
+
+    </form>
+
 </body>
 
 {% endblock content %}
