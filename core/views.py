@@ -38,14 +38,14 @@ class locations_page(ListView):
 
 
 
-class stamps_page(UserPassesTestMixin,ListView):
+class stamps_page(ListView):
     model = WorkEntry
     template_name = 'stamps.html'
     form_class = StempForm
     context_object_name='stamps'
 
-    def test_func(self):
-        return self.request.user.groups.filter(name='Doctor').exists()
+    # def test_func(self):
+    #     return self.request.user.groups.filter(name='admin').exists()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
