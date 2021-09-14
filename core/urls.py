@@ -3,7 +3,7 @@ from django.urls import path, re_path
 from core.views import admin_main, users_page, locations_page, \
     DoctorCreateView, DoctorDetailsView, CreateLocation,LocationUpdate , UserUpdate , LocationDelete,  \
     LocationDetail , UserDelete, stamps_second_test_function, stamps_page, \
-    workentry_filter
+     reports_page
 
 app_name ='core'
 
@@ -16,7 +16,7 @@ urlpatterns = [
     # Testing new Stamps page
     path('stamps_detail/<pk>/', stamps_second_test_function, name='stamps_detail'),
 
-    path('reports/', workentry_filter , name='reports'),
+    path('reports/', reports_page , name='reports'),
     # create a doctor / user
     path('create_user/', DoctorCreateView.as_view(), name='create_user'),
     # doctor / user details ... link from users.html

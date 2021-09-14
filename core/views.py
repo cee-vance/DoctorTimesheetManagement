@@ -12,7 +12,7 @@ from .forms import ReportForm, StempForm,  LocationForm , DoctorCreateForm, Step
 from django.forms import formset_factory, inlineformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test
-
+from .filters import WorkEntryFilter
 
 
 class admin_main(ListView):
@@ -37,27 +37,7 @@ class locations_page(ListView):
 
 
 
-def workentry_filter(request):
-    if not request.user.groups.filter(name='admin').exists():
-        return HttpResponse('Must be admin to view reports page')
-    qs = WorkEntry.objects.all()
-    user_contains = request.GET.get('doctor_id')
-    srch_date = request.GET.get('date')
-    srch_location = request.GET.get('location')
 
-    if user_contains != '':
-       qs = qs.filter(doctor_id  = user_contains )
-
-    if srch_date != '':
-        qs = qs.filter( date = srch_date)
-
-    if srch_location != '':
-        qs = qs.filter(location = srch_location)
-
-    context = {
-        'entries':qs
-    }
-    return render(request, 'reports.html', context)
 
 
 
@@ -183,3 +163,20 @@ class LocationDetail(DetailView):
     model = Location
     template_name = 'location_details.html'
     context_object_name = 'location'
+
+
+def reports_page(request):
+    """"
+    Filters WorkEntry items by user, date , location, and hourscode
+    """
+    if not request.user.groups.filter(name='admin').exists():
+        return HttpResponse('Must be admin to view reports page')
+    entries = WorkEntry.objects.all()
+
+    filter = WorkEntryFilter(request.GET, queryset=entries)
+    entries = filter.qs
+    context = {
+        'entries': entries,
+        'filter': filter
+    }
+    return render(request, 'reports.html', context)
